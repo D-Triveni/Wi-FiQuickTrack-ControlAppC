@@ -38,7 +38,9 @@ int rrm = 0, he_mu_edca = 0;
 #endif
 
 extern struct sockaddr_in *tool_addr;
+#ifdef CONFIG_WPS
 extern wps_setting* get_vendor_wps_settings_for_ie_frag_test(enum wps_device_role role);
+#endif /* End Of CONFIG_WPS */
 int additional_tp_id = 0;
 
 void register_apis() {
@@ -53,7 +55,9 @@ void register_apis() {
     register_api(API_ASSIGN_STATIC_IP, NULL, assign_static_ip_handler);
     register_api(API_START_DHCP, NULL, start_dhcp_handler);
     register_api(API_STOP_DHCP, NULL, stop_dhcp_handler);
+#ifdef CONFIG_WPS
     register_api(API_GET_WSC_CRED, NULL, get_wsc_cred_handler);
+#endif /* End Of CONFIG_WPS */
     register_api(API_STA_SEND_ICON_REQ, NULL, send_sta_icon_req_handler);
 #ifdef CONFIG_AP
     /* AP */
@@ -2103,6 +2107,7 @@ done:
     return 0;
 }
 
+#ifdef CONFIG_WPS
 struct _cfg_cred {
     char *key;
     char *tok;
@@ -2208,6 +2213,7 @@ done:
     }
     return 0;
 }
+#endif /* End Of CONFIG_WPS */
 
 
 static int send_sta_icon_req_handler(struct packet_wrapper *req, struct packet_wrapper *resp) {
